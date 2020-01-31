@@ -1,0 +1,53 @@
+[
+    {
+        "id": 1,
+        "name": "DOOM Eternal",
+        "game_year": 2020,
+        "esrb": "M",
+        "company": "Bethesda Softworks",
+        "enable": true,
+        "genres": [
+            {
+                "id": 1,
+                "genero": "Shooter",
+                "games": [
+                    {
+                        "id": 1,
+                        "name": "DOOM Eternal",
+                        "game_year": 2020,
+                        "esrb": "M",
+                        "company": "Bethesda Softworks",
+                        "enable": true,
+                        "genres": [
+                            {
+                                "id": 1,
+                                "genero": "Shooter",
+                                "games": [
+                                    {
+                                        "id": 1,
+                                        "name": "DOOM Eternal",
+                                        "game_year": 2020,
+                                        "esrb": "M",
+                                        "company": "Bethesda Softworks",
+                                        "enable": true,
+                                        "genres": [
+                                            {
+                                                "id": 1,
+                                                "genero": "Shooter",
+                                                "games": [
+                                                    {
+                                                        "id": 1,
+                                                        "name": "DOOM Eternal",
+                                                        "game_year": 2020,
+                                                        "esrb": "M",
+                                                        "company": "Bethesda Softworks",
+                                                        "enable": true,
+                                                        "genres": [
+                                                            {
+                                                                "id": 1,
+                                                                "genero": "Shooter",
+                                                                "games": [
+                                                                    {
+                                                                        "id": 1,
+                                                                        "name": "DOOM Eternal",
+                                                                        "game_year": 2020,
