@@ -1,5 +1,6 @@
 package com.lofton.examenpractico.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,39 +18,34 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "genero")
-public class Genre {
+@Table(name = "plataforma")
+public class Platform {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "genero")
-	private String genero;
-
+	@Column(name="plataforma")
+	private String plataforma;
+	
 	@JsonIgnore
 	@ManyToMany( fetch = FetchType.LAZY ,
 			cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 				CascadeType.DETACH, CascadeType.REFRESH} )
 	@JoinTable(
-			name = "juego_genero",
-			joinColumns = @JoinColumn(name = "genero_id"),
+			name = "juego_plataforma",
+			joinColumns = @JoinColumn(name = "plataforma_id"),
 			inverseJoinColumns = @JoinColumn(name = "juego_id")
 			)
 	private List<Game> games;
-
-	public Genre() {
-
+	
+	public Platform() {
+		
 	}
 
-	public Genre(String genero) {
-		this.genero = genero;
-	}
-
-	public Genre(String genero, List<Game> games) {
-		this.genero = genero;
-		this.games = games;
+	public Platform(String plataforma) {
+		this.plataforma = plataforma;
 	}
 
 	public int getId() {
@@ -60,12 +56,12 @@ public class Genre {
 		this.id = id;
 	}
 
-	public String getGenero() {
-		return genero;
+	public String getPlataforma() {
+		return plataforma;
 	}
 
-	public void setGenero(String genero) {
-		this.genero = genero;
+	public void setPlataforma(String plataforma) {
+		this.plataforma = plataforma;
 	}
 	
 	public List<Game> getGames() {
@@ -75,12 +71,19 @@ public class Genre {
 	public void setGames(List<Game> games) {
 		this.games = games;
 	}
+	
+	public void addGame(Game theGame) {
+		
+		if(games == null) {
+			games = new ArrayList<>();	
+		}
+		
+		games.add(theGame);
+	}
 
 	@Override
 	public String toString() {
-		return "Genre [id=" + id + ", genero=" + genero + ", games=" + games + "]";
+		return "Platform [id=" + id + ", plataforma=" + plataforma + "]";
 	}
-
-
 
 }

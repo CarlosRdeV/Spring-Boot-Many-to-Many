@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lofton.examenpractico.dao.GameRepository;
+import com.lofton.examenpractico.dao.GenreRepository;
+import com.lofton.examenpractico.dao.PlatformRepository;
 import com.lofton.examenpractico.entity.Game;
+import com.lofton.examenpractico.entity.Genre;
+import com.lofton.examenpractico.entity.Platform;
 
 @RestController
 @RequestMapping("/api")
@@ -23,10 +26,19 @@ public class GameRestController {
 
 	private GameRepository gameRepo;
 	
+	private GenreRepository genreRepo;
+	
+	private PlatformRepository platformRepo;
 	// quick and dirty : inject game repository
 	@Autowired
-	public GameRestController ( GameRepository theGameRepository ) {
+	public GameRestController ( GameRepository theGameRepository, 
+			GenreRepository theGenreRepository, PlatformRepository ThePlatformRepo ) {
+		
 		gameRepo = theGameRepository;
+		
+		genreRepo = theGenreRepository;
+		
+		platformRepo = ThePlatformRepo;
 	}
 	
 	// expose "/games" and return list of games
@@ -96,4 +108,72 @@ public class GameRestController {
 		
 		return theGame;
 	}
+	
+	// add mapping for PUT /games/{gameId}/{genreId} - add existing genre to a existing game
+	@PutMapping("/games/genres/{gameId}/{genreId}")
+	public Game addGenreGame(@PathVariable int gameId, @PathVariable int genreId) {
+		
+		Optional<Game> tempGame = gameRepo.findById(gameId);
+		
+		Game theGame = null;
+		
+		Optional<Genre> tempGenre = genreRepo.findById(genreId);
+		
+		Genre theGenre = null;
+		
+		if(tempGame.isPresent()) {
+			
+				if(tempGenre.isPresent()) {
+					theGame = tempGame.get();
+					theGenre= tempGenre.get();
+					
+				}else {
+					throw new RuntimeException("Genre id not found - " + genreId);
+				}
+		
+		}else {
+			throw new RuntimeException("Game id not found - " + gameId);
+		}
+		
+		theGame.addGenre(theGenre);
+		
+		gameRepo.save(theGame);
+		
+		return theGame;
+	}
+	
+	// add mapping for PUT /games/{gameId}/{genreId} - add existing genre to a existing game
+	@PutMapping("/games/platforms/{gameId}/{platformId}")
+	public Game addPlaformGame(@PathVariable int gameId, @PathVariable int platformId) {
+		
+		Optional<Game> tempGame = gameRepo.findById(gameId);
+		
+		Game theGame = null;
+		
+		Optional<Platform> tempPlatform = platformRepo.findById(platformId);
+		
+		Platform thePlatform = null;
+		
+		if(tempGame.isPresent()) {
+			
+				if(tempPlatform.isPresent()) {
+					theGame = tempGame.get();
+					thePlatform= tempPlatform.get();
+					
+				}else {
+					throw new RuntimeException("Platform id not found - " + platformId);
+				}
+		
+		}else {
+			throw new RuntimeException("Game id not found - " + gameId);
+		}
+		
+		theGame.addPlatform(thePlatform);
+		
+		gameRepo.save(theGame);
+		
+		return theGame;
+	}
+
+	
 }
